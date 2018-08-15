@@ -4,9 +4,9 @@
 #
 Name     : xvfb-run
 Version  : 1.20.0
-Release  : 1
-URL      : http://localhost/cgit/projects/xfvb-run/snapshots/xvfb-run-1.20.0.tar.gz
-Source0  : http://localhost/cgit/projects/xfvb-run/snapshots/xvfb-run-1.20.0.tar.gz
+Release  : 2
+URL      : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
+Source0  : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
@@ -51,11 +51,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534287113
+export SOURCE_DATE_EPOCH=1534354874
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1534287113
+export SOURCE_DATE_EPOCH=1534354874
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/xvfb-run
 cp copyright %{buildroot}/usr/share/doc/xvfb-run/copyright
