@@ -4,7 +4,7 @@
 #
 Name     : xvfb-run
 Version  : 1.20.0
-Release  : 2
+Release  : 3
 URL      : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Source0  : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Summary  : No detailed summary available
