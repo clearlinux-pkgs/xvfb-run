@@ -4,15 +4,17 @@
 #
 Name     : xvfb-run
 Version  : 1.20.0
-Release  : 3
+Release  : 4
 URL      : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Source0  : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
-Requires: xvfb-run-bin
-Requires: xvfb-run-man
+Requires: xvfb-run-bin = %{version}-%{release}
+Requires: xvfb-run-license = %{version}-%{release}
+Requires: xvfb-run-man = %{version}-%{release}
 Requires: xorg-server-bin
+Patch1: 0001-Replace-tempfile-with-mktemp-command.patch
 
 %description
 No detailed description available
@@ -20,19 +22,18 @@ No detailed description available
 %package bin
 Summary: bin components for the xvfb-run package.
 Group: Binaries
-Requires: xvfb-run-man
+Requires: xvfb-run-license = %{version}-%{release}
 
 %description bin
 bin components for the xvfb-run package.
 
 
-%package doc
-Summary: doc components for the xvfb-run package.
-Group: Documentation
-Requires: xvfb-run-man
+%package license
+Summary: license components for the xvfb-run package.
+Group: Default
 
-%description doc
-doc components for the xvfb-run package.
+%description license
+license components for the xvfb-run package.
 
 
 %package man
@@ -45,20 +46,30 @@ man components for the xvfb-run package.
 
 %prep
 %setup -q -n xvfb-run-1.20.0
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534354874
+export SOURCE_DATE_EPOCH=1560374161
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}
 
+
 %install
-export SOURCE_DATE_EPOCH=1534354874
+export SOURCE_DATE_EPOCH=1560374161
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/xvfb-run
-cp copyright %{buildroot}/usr/share/doc/xvfb-run/copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/xvfb-run
+cp copyright %{buildroot}/usr/share/package-licenses/xvfb-run/copyright
 %make_install
 
 %files
@@ -68,10 +79,10 @@ cp copyright %{buildroot}/usr/share/doc/xvfb-run/copyright
 %defattr(-,root,root,-)
 /usr/bin/xvfb-run
 
-%files doc
+%files license
 %defattr(0644,root,root,0755)
-%doc /usr/share/doc/xvfb\-run/*
+/usr/share/package-licenses/xvfb-run/copyright
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/xvfb-run.1

@@ -1,0 +1,30 @@
+From 4a078640ea86bf2f8c70d120788849fc89896067 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Wed, 12 Jun 2019 14:12:55 -0700
+Subject: [PATCH] Replace tempfile with mktemp command
+
+xvfb-run script attempts to create an Xauthority file via the 'tempfile'
+command, which does not exist. Substitute a valid 'mktemp' command
+instead.
+
+Ref: https://bugzilla.redhat.com/show_bug.cgi?id=624510
+---
+ xvfb-run | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/xvfb-run b/xvfb-run
+index b92e467..cd36c82 100755
+--- a/xvfb-run
++++ b/xvfb-run
+@@ -147,7 +147,7 @@ trap clean_up EXIT
+ if [ -z "$AUTHFILE" ]; then
+     XVFB_RUN_TMPDIR="$(mktemp -d -t $PROGNAME.XXXXXX)"
+     # Create empty file to avoid xauth warning
+-    AUTHFILE=$(tempfile -n "$XVFB_RUN_TMPDIR/Xauthority")
++    AUTHFILE=$(mktemp -p "$XVFB_RUN_TMPDIR" Xauthority.XXXXXXXX)
+ fi
+ 
+ # Start Xvfb.
+-- 
+2.22.0
+
