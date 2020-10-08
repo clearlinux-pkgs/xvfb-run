@@ -4,7 +4,7 @@
 #
 Name     : xvfb-run
 Version  : 1.20.0
-Release  : 4
+Release  : 5
 URL      : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Source0  : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Summary  : No detailed summary available
@@ -13,7 +13,9 @@ License  : MIT
 Requires: xvfb-run-bin = %{version}-%{release}
 Requires: xvfb-run-license = %{version}-%{release}
 Requires: xvfb-run-man = %{version}-%{release}
+Requires: xauth
 Requires: xorg-server-bin
+BuildRequires : xauth
 Patch1: 0001-Replace-tempfile-with-mktemp-command.patch
 
 %description
@@ -46,30 +48,31 @@ man components for the xvfb-run package.
 
 %prep
 %setup -q -n xvfb-run-1.20.0
+cd %{_builddir}/xvfb-run-1.20.0
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1560374161
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1602192661
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1560374161
+export SOURCE_DATE_EPOCH=1602192661
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xvfb-run
-cp copyright %{buildroot}/usr/share/package-licenses/xvfb-run/copyright
+cp %{_builddir}/xvfb-run-1.20.0/copyright %{buildroot}/usr/share/package-licenses/xvfb-run/11d1ae389a1a78f7832586e4c2a0c3c7263b7475
 %make_install
 
 %files
@@ -81,7 +84,7 @@ cp copyright %{buildroot}/usr/share/package-licenses/xvfb-run/copyright
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/xvfb-run/copyright
+/usr/share/package-licenses/xvfb-run/11d1ae389a1a78f7832586e4c2a0c3c7263b7475
 
 %files man
 %defattr(0644,root,root,0755)
