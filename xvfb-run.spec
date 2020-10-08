@@ -4,7 +4,7 @@
 #
 Name     : xvfb-run
 Version  : 1.20.0
-Release  : 5
+Release  : 6
 URL      : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Source0  : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Summary  : No detailed summary available
@@ -13,8 +13,10 @@ License  : MIT
 Requires: xvfb-run-bin = %{version}-%{release}
 Requires: xvfb-run-license = %{version}-%{release}
 Requires: xvfb-run-man = %{version}-%{release}
+Requires: which
 Requires: xauth
 Requires: xorg-server-bin
+BuildRequires : which
 BuildRequires : xauth
 Patch1: 0001-Replace-tempfile-with-mktemp-command.patch
 
@@ -56,7 +58,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1602192661
+export SOURCE_DATE_EPOCH=1602193214
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -69,7 +71,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1602192661
+export SOURCE_DATE_EPOCH=1602193214
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xvfb-run
 cp %{_builddir}/xvfb-run-1.20.0/copyright %{buildroot}/usr/share/package-licenses/xvfb-run/11d1ae389a1a78f7832586e4c2a0c3c7263b7475
