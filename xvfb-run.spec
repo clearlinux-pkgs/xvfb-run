@@ -5,7 +5,7 @@
 #
 Name     : xvfb-run
 Version  : 1.20.0
-Release  : 7
+Release  : 8
 URL      : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Source0  : http://localhost/cgit/projects/xvfb-run/snapshot/xvfb-run-1.20.0.tar.gz
 Summary  : No detailed summary available
@@ -16,6 +16,7 @@ Requires: xvfb-run-license = %{version}-%{release}
 Requires: xvfb-run-man = %{version}-%{release}
 Requires: which
 Requires: xauth
+Requires: xorg-server-bin
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -52,7 +53,7 @@ man components for the xvfb-run package.
 %prep
 %setup -q -n xvfb-run-1.20.0
 cd %{_builddir}/xvfb-run-1.20.0
-%patch1 -p1
+%patch -P 1 -p1
 pushd ..
 cp -a xvfb-run-1.20.0 buildavx2
 popd
@@ -62,7 +63,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1685117557
+export SOURCE_DATE_EPOCH=1691012718
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -83,7 +84,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1685117557
+export SOURCE_DATE_EPOCH=1691012718
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xvfb-run
 cp %{_builddir}/xvfb-run-%{version}/copyright %{buildroot}/usr/share/package-licenses/xvfb-run/11d1ae389a1a78f7832586e4c2a0c3c7263b7475 || :
